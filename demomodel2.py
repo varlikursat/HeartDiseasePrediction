@@ -6,24 +6,24 @@ from sklearn.metrics import classification_report, accuracy_score
 
 data = pd.read_csv('HeartDiseaseDataset.csv')
 
-# Kategorik olan dataları convert ettiğim kısım
+# Converting categorical values
 data = pd.get_dummies(data, columns=['Sex', 'ChestPainType', 'FastingBS', 'RestingECG', 'ExerciseAngina', 'ST_Slope'])
 
 X = data.drop('HeartDisease', axis=1)
 y = data['HeartDisease']
 
-# Datasetimizin %60 ını training datası, %20lik kısmını test datası kalan %20lik kısmınsa validation datası olarak ayarladım
+# The dataset is divided into 60% for training , 20% for testing, 20% for validation
 X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.4, random_state=42)
 X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
 
-# Hyperparametreleri tanımlayıp ayarladığım kısım
+# Hyperparameter tuning
 param_grid = {
     'max_depth': [None, 3, 5, 7, 10],
     'min_samples_split': [2, 5, 10],
     'min_samples_leaf': [1, 2, 4]
 }
 
-# Decision Tree algoritmamızı dahil ettiğim kısım
+# Decision Tree algorithm
 dt_classifier = DecisionTreeClassifier(random_state=42)
 
 
